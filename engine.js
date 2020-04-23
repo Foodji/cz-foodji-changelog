@@ -89,6 +89,15 @@ module.exports = function(options) {
         },
         {
           type: 'input',
+          name: 'jira',
+          message:
+            'Provide a JIRA ticket ID: (press enter to skip)',
+          default: options.defaultJiraTicket,filter: function(value) {
+            return value.trim().toUpperCase();
+          }
+        },
+        {
+          type: 'input',
           name: 'subject',
           message: function(answers) {
             return (
@@ -200,7 +209,7 @@ module.exports = function(options) {
         var scope = answers.scope ? '(' + answers.scope + ')' : '';
 
         // Hard limit this line in the validate
-        var head = answers.type + scope + ': ' + answers.subject;
+        var head = answers.type + scope + ': ' + answers.jira + answers.subject;
 
         // Wrap these lines at options.maxLineWidth characters
         var body = answers.body ? wrap(answers.body, wrapOptions) : false;
